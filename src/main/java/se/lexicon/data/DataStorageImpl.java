@@ -46,36 +46,61 @@ public class DataStorageImpl implements DataStorage {
 
     @Override
     public Person findOne(Predicate<Person> filter) {
-        // TODO: needs completion
+        for(Person person : personList) {
+            if(filter.test(person)) {
+                return person;
+            }
+        }
         return null;
     }
 
     @Override
     public String findOneAndMapToString(Predicate<Person> filter, Function<Person, String> personToString) {
-        // TODO: needs completion
+        for(Person person : personList) {
+            if(filter.test(person)) {
+                return personToString.apply(person);
+            }
+        }
         return null;
     }
 
     @Override
     public List<String> findManyAndMapEachToString(Predicate<Person> filter, Function<Person, String> personToString) {
-        // TODO: needs completion
-        return null;
+        List<String> tempList = new ArrayList<>();
+        for(Person person : personList) {
+            if(filter.test(person)) {
+                tempList.add(personToString.apply(person));
+            }
+        }
+        return tempList;
     }
 
     @Override
     public void findAndDo(Predicate<Person> filter, Consumer<Person> consumer) {
-        // TODO: needs completion
+        for(Person person : personList) {
+            if(filter.test(person)) {
+                //System.out.println(person.toString());
+                consumer.accept(person);
+            }
+        }
     }
 
     @Override
     public List<Person> findAndSort(Comparator<Person> comparator) {
-        // TODO: needs completion
-        return null;
+        List<Person> tempList = personList;
+        tempList.sort(comparator);
+        return tempList;
     }
 
     @Override
     public List<Person> findAndSort(Predicate<Person> filter, Comparator<Person> comparator) {
-        // TODO: needs completion
-        return null;
+        List<Person> tempList = new ArrayList<>();
+        for(Person person : personList) {
+            if(filter.test(person)) {
+                tempList.add(person);
+            }
+        }
+        tempList.sort(comparator);
+        return tempList;
     }
 }
